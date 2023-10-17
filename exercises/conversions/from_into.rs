@@ -6,7 +6,6 @@
 //
 // Execute `rustlings hint from_into` or use the `hint` watch subcommand for a
 // hint.
-
 #[derive(Debug)]
 struct Person {
     name: String,
@@ -40,10 +39,28 @@ impl Default for Person {
 // If while parsing the age, something goes wrong, then return the default of
 // Person Otherwise, then return an instantiated Person object with the results
 
-// I AM NOT DONE
 
 impl From<&str> for Person {
     fn from(s: &str) -> Person {
+        if s.len() == 0 {
+            Person::default()
+        }else{
+            /*
+            let mut person_list: Vec<&str>  = s.splitn(2, ',').collect(); 
+            let  name = person_list[0];
+            let  age:usize = person_list[1].parse().unwrap_or_else(|error|0);
+            */
+            let mut person_list  = s.splitn(2, ','); 
+            let  name = person_list.nth(0).unwrap();
+            //let  age:usize = person_list.remainder().unwrap_or(return Person::default()).parse().unwrap_or( return Person::default());
+            let  age:usize = person_list.nth(0).unwrap_or_else(||"0").parse().unwrap_or_else( |error| 0);
+            //panic!("{:?}", error));//_or(return Person::default());
+            if name.is_empty() || age == 0 {
+                Person::default()
+            }else{
+                 Person{name:String::from(name),age:age} 
+            }
+        }
     }
 }
 
